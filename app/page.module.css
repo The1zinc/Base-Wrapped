@@ -209,11 +209,22 @@
 }
 
 .walletButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-top: 10px;
-  width: 100%;
-  border-color: rgba(255, 214, 176, 0.52);
-  background: rgba(72, 33, 14, 0.26);
-  color: rgba(255, 242, 223, 0.96);
+  margin-inline: auto;
+  width: fit-content;
+  max-width: 100%;
+  min-height: 36px;
+  min-width: 136px;
+  border-color: rgba(255, 218, 176, 0.62);
+  background: linear-gradient(135deg, rgba(255, 230, 199, 0.14), rgba(255, 159, 92, 0.22));
+  box-shadow: inset 0 1px 0 rgba(255, 247, 232, 0.2);
+  color: rgba(255, 241, 223, 0.98);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 14px;
 }
 
 .lookupButton:disabled,
@@ -577,9 +588,10 @@
 }
 
 :global(:root[data-theme="light"]) .walletButton {
-  border-color: rgba(211, 123, 69, 0.42);
-  background: linear-gradient(135deg, rgba(245, 139, 59, 0.2), rgba(221, 96, 48, 0.16));
-  color: #8a3d18;
+  border-color: rgba(188, 113, 72, 0.44);
+  background: rgba(255, 239, 219, 0.88);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.82);
+  color: #7a3210;
 }
 
 :global(:root[data-theme="light"]) .previewCard {
@@ -617,7 +629,12 @@
     box-shadow: 0 12px 24px rgba(126, 58, 25, 0.28);
   }
 
-  .walletButton:hover,
+  .walletButton:hover {
+    box-shadow:
+      0 8px 18px rgba(126, 58, 25, 0.22),
+      inset 0 1px 0 rgba(255, 247, 232, 0.26);
+  }
+
   .primaryButton:hover {
     box-shadow: 0 12px 26px rgba(147, 68, 30, 0.36);
   }

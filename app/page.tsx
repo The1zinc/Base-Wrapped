@@ -562,7 +562,7 @@ export default function Home() {
             onClick={() => void handleUseConnectedWallet()}
             disabled={isLoading}
           >
-            Use connected wallet
+            Connect wallet
           </button>
 
           {errorMessage ? <p className={styles.error}>{errorMessage}</p> : null}
