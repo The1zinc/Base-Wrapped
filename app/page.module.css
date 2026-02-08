@@ -526,6 +526,79 @@
   width: 1px;
 }
 
+:global(:root[data-theme="light"]) .page::before {
+  background: radial-gradient(circle at center, rgba(247, 131, 56, 0.24), transparent 64%);
+}
+
+:global(:root[data-theme="light"]) .page::after {
+  background: radial-gradient(circle at center, rgba(245, 182, 86, 0.22), transparent 64%);
+}
+
+:global(:root[data-theme="light"]) .topBar,
+:global(:root[data-theme="light"]) .loadingCard,
+:global(:root[data-theme="light"]) .snapshotSection,
+:global(:root[data-theme="light"]) .identityCard,
+:global(:root[data-theme="light"]) .quickCard,
+:global(:root[data-theme="light"]) .metricCard,
+:global(:root[data-theme="light"]) .detailCard {
+  box-shadow:
+    0 12px 24px rgba(184, 120, 76, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.78);
+}
+
+:global(:root[data-theme="light"]) .themeToggle {
+  background: rgba(83, 45, 23, 0.9);
+}
+
+:global(:root[data-theme="light"]) .themeToggleLight {
+  border-color: rgba(193, 133, 93, 0.45);
+  background: rgba(255, 237, 213, 0.96);
+}
+
+:global(:root[data-theme="light"]) .hero {
+  border-color: rgba(221, 122, 58, 0.42);
+  box-shadow: 0 18px 36px rgba(212, 113, 56, 0.24);
+}
+
+:global(:root[data-theme="light"]) .addressInput {
+  border-color: rgba(196, 129, 84, 0.42);
+  background: rgba(255, 252, 247, 0.98);
+  color: #5f341d;
+}
+
+:global(:root[data-theme="light"]) .addressInput::placeholder {
+  color: rgba(146, 97, 64, 0.64);
+}
+
+:global(:root[data-theme="light"]) .lookupButton {
+  border-color: rgba(204, 136, 90, 0.36);
+  background: rgba(255, 255, 255, 0.98);
+  color: #92451d;
+}
+
+:global(:root[data-theme="light"]) .walletButton {
+  border-color: rgba(211, 123, 69, 0.42);
+  background: linear-gradient(135deg, rgba(245, 139, 59, 0.2), rgba(221, 96, 48, 0.16));
+  color: #8a3d18;
+}
+
+:global(:root[data-theme="light"]) .previewCard {
+  border-color: rgba(206, 139, 91, 0.36);
+  background: linear-gradient(145deg, rgba(255, 251, 246, 0.98), rgba(255, 239, 222, 0.96));
+}
+
+:global(:root[data-theme="light"]) .previewCard span {
+  color: #a15d36;
+}
+
+:global(:root[data-theme="light"]) .previewCard strong {
+  color: #5b301a;
+}
+
+:global(:root[data-theme="light"]) .error {
+  color: #af3f35;
+}
+
 @media (hover: hover) and (pointer: fine) {
   .themeToggle:hover,
   .lookupButton:hover,
