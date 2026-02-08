@@ -1,0 +1,28 @@
+{
+  "accountAssociation": {
+    "header": "",
+    "payload": "",
+    "signature": ""
+  },
+  "miniapp": {
+    "version": "1",
+    "name": "Wallet Wrapped",
+    "subtitle": "Your Base recap",
+    "description": "Instant no-backend Base wallet recap with shareable stats.",
+    "homeUrl": "https://wallet-wrapped-mini.vercel.app",
+    "iconUrl": "https://wallet-wrapped-mini.vercel.app/icon.svg",
+    "splashImageUrl": "https://wallet-wrapped-mini.vercel.app/splash.svg",
+    "splashBackgroundColor": "#03111f",
+    "primaryCategory": "finance",
+    "tags": ["base", "wallet", "analytics", "wrapped"],
+    "heroImageUrl": "https://wallet-wrapped-mini.vercel.app/og-image.svg",
+    "tagline": "See your onchain rhythm",
+    "ogTitle": "Wallet Wrapped",
+    "ogDescription": "Drop a Base wallet and get an instant recap.",
+    "ogImageUrl": "https://wallet-wrapped-mini.vercel.app/og-image.svg",
+    "screenshotUrls": [
+      "https://wallet-wrapped-mini.vercel.app/screenshot-1.svg"
+    ],
+    "noindex": true
+  }
+}

@@ -1,0 +1,41 @@
+:root {
+  --bg-main: #03111f;
+  --bg-top: #0b2a3e;
+  --surface: rgba(9, 28, 44, 0.72);
+  --surface-strong: #102d42;
+  --line: rgba(127, 167, 195, 0.24);
+  --text-main: #f5fbff;
+  --text-muted: #a7c2d4;
+  --mint: #17d7b6;
+  --amber: #ffd166;
+  --danger: #ff7a7a;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 8% -12%, rgba(23, 215, 182, 0.22), transparent 40%),
+    radial-gradient(circle at 88% -14%, rgba(255, 209, 102, 0.2), transparent 38%),
+    linear-gradient(180deg, var(--bg-top), var(--bg-main) 50%, #020a13);
+  color: var(--text-main);
+  font-family: var(--font-space-grotesk), "Trebuchet MS", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
