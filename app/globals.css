@@ -1,14 +1,53 @@
 :root {
-  --bg-main: #03111f;
-  --bg-top: #0b2a3e;
-  --surface: rgba(9, 28, 44, 0.72);
-  --surface-strong: #102d42;
-  --line: rgba(127, 167, 195, 0.24);
-  --text-main: #f5fbff;
-  --text-muted: #a7c2d4;
-  --mint: #17d7b6;
-  --amber: #ffd166;
-  --danger: #ff7a7a;
+  color-scheme: dark;
+  --bg-main: #1c0d05;
+  --bg-top: #31170a;
+  --bg-bottom: #120601;
+  --bg-glow-a: rgba(255, 150, 72, 0.3);
+  --bg-glow-b: rgba(255, 209, 120, 0.2);
+  --bg-glow-c: rgba(216, 94, 44, 0.22);
+  --surface: rgba(28, 14, 8, 0.84);
+  --surface-soft: rgba(36, 18, 10, 0.82);
+  --surface-strong: #3c1f11;
+  --line: rgba(255, 179, 116, 0.24);
+  --text-main: #fff5e8;
+  --text-muted: #d6bca2;
+  --text-inverse: #fff8f0;
+  --mint: #ffb770;
+  --amber: #ffd9a6;
+  --danger: #ff9c8e;
+  --chip-bg: rgba(66, 34, 18, 0.85);
+  --chip-active-bg: rgba(255, 175, 96, 0.2);
+  --chip-active-text: #ffd5a4;
+  --hero-start: #f98d3d;
+  --hero-mid: #f47a3a;
+  --hero-end: #d95833;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg-main: #fff2e6;
+  --bg-top: #fff9f2;
+  --bg-bottom: #ffe7d3;
+  --bg-glow-a: rgba(255, 169, 102, 0.2);
+  --bg-glow-b: rgba(255, 201, 137, 0.14);
+  --bg-glow-c: rgba(232, 116, 56, 0.14);
+  --surface: rgba(255, 255, 255, 0.95);
+  --surface-soft: rgba(255, 249, 243, 0.96);
+  --surface-strong: #ffffff;
+  --line: rgba(201, 145, 99, 0.28);
+  --text-main: #4a2714;
+  --text-muted: #8f6246;
+  --text-inverse: #fff9f2;
+  --mint: #be6d2f;
+  --amber: #8f4a0e;
+  --danger: #b1433a;
+  --chip-bg: rgba(255, 236, 215, 0.94);
+  --chip-active-bg: rgba(242, 148, 77, 0.18);
+  --chip-active-text: #8c4213;
+  --hero-start: #f68c3c;
+  --hero-mid: #f47b35;
+  --hero-end: #df5a2f;
 }
 
 * {
@@ -26,11 +65,13 @@ body {
 body {
   min-height: 100vh;
   background:
-    radial-gradient(circle at 8% -12%, rgba(23, 215, 182, 0.22), transparent 40%),
-    radial-gradient(circle at 88% -14%, rgba(255, 209, 102, 0.2), transparent 38%),
-    linear-gradient(180deg, var(--bg-top), var(--bg-main) 50%, #020a13);
+    radial-gradient(circle at 12% 0%, var(--bg-glow-a), transparent 32%),
+    radial-gradient(circle at 88% 120%, var(--bg-glow-b), transparent 32%),
+    radial-gradient(circle at 50% 140%, var(--bg-glow-c), transparent 44%),
+    linear-gradient(180deg, var(--bg-top), var(--bg-main) 42%, var(--bg-bottom) 76%, var(--bg-bottom));
   color: var(--text-main);
   font-family: var(--font-space-grotesk), "Trebuchet MS", sans-serif;
+  transition: background 220ms ease, color 220ms ease;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

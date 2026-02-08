@@ -20,7 +20,7 @@
     font-weight="700"
     letter-spacing="-2"
   >
-    Wallet Wrapped
+    Base Wallet Wrapped
   </text>
   <text
     x="128"
@@ -29,7 +29,7 @@
     font-size="34"
     font-family="'Trebuchet MS', sans-serif"
   >
-    Instant Base wallet recap. No backend needed.
+    Instant Base wallet analytics. No backend needed.
   </text>
   <rect x="128" y="372" width="452" height="8" rx="4" fill="url(#accent)" />
   <text

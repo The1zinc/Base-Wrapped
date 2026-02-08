@@ -1,6 +1,6 @@
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
@@ -27,10 +27,10 @@ const miniAppEmbed = {
   version: "next",
   imageUrl: `${appUrl}/og-image.svg`,
   button: {
-    title: "Open Wallet Wrapped",
+    title: "Open Base Wallet Wrapped",
     action: {
       type: "launch_miniapp",
-      name: "Wallet Wrapped",
+      name: "Base Wallet Wrapped",
       url: appUrl,
       splashImageUrl: `${appUrl}/splash.svg`,
       splashBackgroundColor: "#03111f",
@@ -40,10 +40,10 @@ const miniAppEmbed = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(appUrl),
-  title: "Wallet Wrapped | Base Mini App",
-  description: "Drop any Base wallet address and generate a no-backend, shareable onchain wrapped.",
+  title: "Base Wallet Wrapped | Base Mini App",
+  description: "Lookup any Base wallet address and generate a clean, shareable onchain wrapped.",
   openGraph: {
-    title: "Wallet Wrapped",
+    title: "Base Wallet Wrapped",
     description: "A lightweight Base mini app that turns wallet activity into a shareable recap.",
     images: [`${appUrl}/og-image.svg`],
   },
@@ -53,13 +53,19 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" data-theme="dark">
       <body className={`${spaceGrotesk.variable} ${ibmPlexMono.variable}`}>
         {children}
         <Analytics />

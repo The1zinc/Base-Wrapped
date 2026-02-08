@@ -1,13 +1,15 @@
 "use client";
 
 import { sdk } from "@farcaster/miniapp-sdk";
-import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
+import { FormEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import styles from "./page.module.css";
 
 const BLOCKSCOUT_API = "https://base.blockscout.com/api/v2";
 const LOOKBACK_DAYS = 30;
+const REQUEST_TIMEOUT_MS = 15_000;
 const WEI_PER_ETH = BigInt("1000000000000000000");
 const ADDRESS_REGEX = /^0x[a-fA-F0-9]{40}$/;
+const THEME_STORAGE_KEY = "base-wallet-wrapped-theme-v2";
 
 type AddressSummaryResponse = {
   coin_balance: string;
@@ -50,14 +52,16 @@ type WrappedSnapshot = {
   gasUnits: string;
   inboundTxs30d: number;
   largestTransferEth30d: string;
-  lifetimeTxs: number;
+  lifetimeTxs: string;
   mostActiveHourUtc: number;
   name: string | null;
   outboundTxs30d: number;
   shortAddress: string;
-  tokenTransfers: number;
+  tokenTransfers: string;
   txsLast30Days: number;
 };
+
+type ThemeMode = "dark" | "light";
 
 type EthereumProvider = {
   request: (payload: { method: string }) => Promise<string[]>;
@@ -73,6 +77,26 @@ function shortAddress(address: string): string {
 
 function formatCount(value: number): string {
   return new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }).format(value);
+}
+
+function formatBigIntCount(value: bigint): string {
+  const absolute = value < BigInt(0) ? -value : value;
+  const sign = value < BigInt(0) ? "-" : "";
+  const withSeparators = absolute.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return `${sign}${withSeparators}`;
+}
+
+function toSafeNonNegativeNumber(value: bigint): number {
+  if (value <= BigInt(0)) {
+    return 0;
+  }
+
+  const maxSafe = BigInt(Number.MAX_SAFE_INTEGER);
+  if (value >= maxSafe) {
+    return Number.MAX_SAFE_INTEGER;
+  }
+
+  return Number(value);
 }
 
 function formatUsd(value: number): string {
@@ -126,20 +150,20 @@ function getBadge(lifetimeTxs: number, txsLast30Days: number, activeDays: number
   if (txsLast30Days >= 50 || lifetimeTxs >= 2_000) {
     return {
       title: "Onchain Explorer",
-      reason: "You are consistently active across the Base ecosystem.",
+      reason: "Consistently active across the Base ecosystem.",
     };
   }
 
   if (activeDays >= 10 || txsLast30Days >= 15) {
     return {
       title: "Momentum Builder",
-      reason: "Good cadence. Your wallet keeps showing up week after week.",
+      reason: "Good cadence with repeat activity across the month.",
     };
   }
 
   return {
     title: "Fresh Starter",
-    reason: "Early-stage wallet profile with room to build your streak.",
+    reason: "Early-stage profile with room to build a stronger streak.",
   };
 }
 
@@ -155,28 +179,72 @@ function formatHourUtc(hour: number): string {
 
 function createShareMessage(snapshot: WrappedSnapshot): string {
   return [
-    "Wallet Wrapped on Base",
-    `${snapshot.shortAddress} • ${snapshot.badge.title}`,
-    `Lifetime tx: ${formatCount(snapshot.lifetimeTxs)}`,
+    "Base Wallet Wrapped",
+    `${snapshot.shortAddress} - ${snapshot.badge.title}`,
+    `Lifetime tx: ${snapshot.lifetimeTxs}`,
     `Last 30d tx: ${formatCount(snapshot.txsLast30Days)}`,
     `Active days: ${snapshot.activeDays}/30`,
     `Balance: ${snapshot.balanceEth} ETH`,
   ].join("\n");
 }
 
-async function fetchJson<T>(url: string): Promise<T> {
-  const response = await fetch(url, {
-    cache: "no-store",
-    headers: {
-      Accept: "application/json",
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error(`Blockscout request failed (${response.status}).`);
+class RequestAbortedError extends Error {
+  constructor() {
+    super("Request aborted");
+    this.name = "RequestAbortedError";
   }
+}
 
-  return (await response.json()) as T;
+class RequestTimeoutError extends Error {
+  constructor() {
+    super("Request timed out");
+    this.name = "RequestTimeoutError";
+  }
+}
+
+async function fetchJson<T>(url: string, signal?: AbortSignal): Promise<T> {
+  const timeoutController = new AbortController();
+  let didTimeout = false;
+
+  const handleUpstreamAbort = () => {
+    timeoutController.abort();
+  };
+
+  signal?.addEventListener("abort", handleUpstreamAbort, { once: true });
+
+  const timeoutId = setTimeout(() => {
+    didTimeout = true;
+    timeoutController.abort();
+  }, REQUEST_TIMEOUT_MS);
+
+  try {
+    const response = await fetch(url, {
+      cache: "no-store",
+      headers: {
+        Accept: "application/json",
+      },
+      signal: timeoutController.signal,
+    });
+
+    if (!response.ok) {
+      throw new Error(`Blockscout request failed (${response.status}).`);
+    }
+
+    return (await response.json()) as T;
+  } catch (error) {
+    if (error instanceof DOMException && error.name === "AbortError") {
+      if (didTimeout) {
+        throw new RequestTimeoutError();
+      }
+
+      throw new RequestAbortedError();
+    }
+
+    throw error;
+  } finally {
+    clearTimeout(timeoutId);
+    signal?.removeEventListener("abort", handleUpstreamAbort);
+  }
 }
 
 function buildSnapshot(
@@ -226,10 +294,14 @@ function buildSnapshot(
   }
 
   const txsLast30Days = recentTransactions.length;
-  const lifetimeTxs = Number.parseInt(counters.transactions_count, 10) || 0;
-  const tokenTransfers = Number.parseInt(counters.token_transfers_count, 10) || 0;
-  const gasUnitsRaw = Number.parseInt(counters.gas_usage_count, 10);
-  const gasUnits = Number.isNaN(gasUnitsRaw) ? counters.gas_usage_count : formatCount(gasUnitsRaw);
+  const lifetimeTxsRaw = parseBigInt(counters.transactions_count);
+  const tokenTransfersRaw = parseBigInt(counters.token_transfers_count);
+  const gasUnitsRaw = parseBigInt(counters.gas_usage_count);
+
+  const lifetimeTxsForBadge = toSafeNonNegativeNumber(lifetimeTxsRaw);
+  const lifetimeTxs = formatBigIntCount(lifetimeTxsRaw);
+  const tokenTransfers = formatBigIntCount(tokenTransfersRaw);
+  const gasUnits = formatBigIntCount(gasUnitsRaw);
 
   const balanceEth = weiToEth(summary.coin_balance, 6);
   const exchangeRate = Number.parseFloat(summary.exchange_rate ?? "0");
@@ -240,7 +312,7 @@ function buildSnapshot(
     address: targetAddress,
     balanceEth,
     balanceUsd,
-    badge: getBadge(lifetimeTxs, txsLast30Days, activeDays),
+    badge: getBadge(lifetimeTxsForBadge, txsLast30Days, activeDays),
     entityType: summary.is_contract ? "contract" : "wallet",
     gasUnits,
     inboundTxs30d,
@@ -261,6 +333,10 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [isShareCopied, setIsShareCopied] = useState(false);
   const [snapshot, setSnapshot] = useState<WrappedSnapshot | null>(null);
+  const [theme, setTheme] = useState<ThemeMode>("dark");
+  const isIdleState = !snapshot && !isLoading;
+  const requestIdRef = useRef(0);
+  const abortControllerRef = useRef<AbortController | null>(null);
 
   const shareMessage = useMemo(() => {
     if (!snapshot) {
@@ -270,7 +346,25 @@ export default function Home() {
     return createShareMessage(snapshot);
   }, [snapshot]);
 
+  const applyTheme = useCallback((nextTheme: ThemeMode): void => {
+    setTheme(nextTheme);
+    document.documentElement.dataset.theme = nextTheme;
+
+    try {
+      window.localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+    } catch {
+      // Ignore storage errors in restricted environments.
+    }
+  }, []);
+
   const loadSnapshot = useCallback(async (rawAddress: string): Promise<void> => {
+    const requestId = requestIdRef.current + 1;
+    requestIdRef.current = requestId;
+
+    abortControllerRef.current?.abort();
+    const requestController = new AbortController();
+    abortControllerRef.current = requestController;
+
     const normalizedAddress = rawAddress.trim();
     setIsLoading(true);
     setErrorMessage("");
@@ -278,19 +372,43 @@ export default function Home() {
 
     try {
       const [summary, counters, transactions] = await Promise.all([
-        fetchJson<AddressSummaryResponse>(`${BLOCKSCOUT_API}/addresses/${normalizedAddress}`),
-        fetchJson<AddressCountersResponse>(`${BLOCKSCOUT_API}/addresses/${normalizedAddress}/counters`),
-        fetchJson<TransactionsResponse>(`${BLOCKSCOUT_API}/addresses/${normalizedAddress}/transactions`),
+        fetchJson<AddressSummaryResponse>(`${BLOCKSCOUT_API}/addresses/${normalizedAddress}`, requestController.signal),
+        fetchJson<AddressCountersResponse>(
+          `${BLOCKSCOUT_API}/addresses/${normalizedAddress}/counters`,
+          requestController.signal,
+        ),
+        fetchJson<TransactionsResponse>(`${BLOCKSCOUT_API}/addresses/${normalizedAddress}/transactions`, requestController.signal),
       ]);
 
+      if (requestId !== requestIdRef.current) {
+        return;
+      }
+
       setSnapshot(buildSnapshot(normalizedAddress, summary, counters, transactions.items));
-    } catch {
+    } catch (error) {
+      if (requestId !== requestIdRef.current || error instanceof RequestAbortedError) {
+        return;
+      }
+
       setSnapshot(null);
+
+      if (error instanceof RequestTimeoutError) {
+        setErrorMessage("Request timed out while reading Base explorer data. Please retry.");
+        return;
+      }
+
       setErrorMessage("Could not fetch this wallet right now. Check the address and try again in a moment.");
     } finally {
-      setIsLoading(false);
+      if (requestId === requestIdRef.current) {
+        abortControllerRef.current = null;
+        setIsLoading(false);
+      }
     }
   }, []);
+
+  function handleThemeToggle(): void {
+    applyTheme(theme === "dark" ? "light" : "dark");
+  }
 
   async function handleUseConnectedWallet(): Promise<void> {
     const ethereum = (window as Window & { ethereum?: EthereumProvider }).ethereum;
@@ -317,13 +435,22 @@ export default function Home() {
   }
 
   async function handleCopyShare(): Promise<void> {
-    if (!shareMessage || !navigator.clipboard) {
+    if (!shareMessage) {
       return;
     }
 
-    await navigator.clipboard.writeText(shareMessage);
-    setIsShareCopied(true);
-    window.setTimeout(() => setIsShareCopied(false), 2200);
+    if (!navigator.clipboard) {
+      setErrorMessage("Clipboard is unavailable on this device.");
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(shareMessage);
+      setIsShareCopied(true);
+      window.setTimeout(() => setIsShareCopied(false), 2200);
+    } catch {
+      setErrorMessage("Could not copy to clipboard. Please copy manually from the share card.");
+    }
   }
 
   async function handleNativeShare(): Promise<void> {
@@ -359,120 +486,191 @@ export default function Home() {
   }
 
   useEffect(() => {
+    return () => {
+      requestIdRef.current += 1;
+      abortControllerRef.current?.abort();
+    };
+  }, []);
+
+  useEffect(() => {
     void sdk.actions.ready().catch(() => undefined);
+
+    let storedTheme: string | null = null;
+    try {
+      storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
+    } catch {
+      // Ignore storage errors in restricted environments.
+    }
+
+    const initialTheme: ThemeMode = storedTheme === "dark" || storedTheme === "light" ? storedTheme : "dark";
+    applyTheme(initialTheme);
 
     const addressFromQuery = new URLSearchParams(window.location.search).get("address");
     if (addressFromQuery && isAddress(addressFromQuery)) {
       setAddressInput(addressFromQuery);
       void loadSnapshot(addressFromQuery);
     }
-  }, [loadSnapshot]);
+  }, [applyTheme, loadSnapshot]);
 
   return (
     <div className={styles.page}>
       <main className={styles.main}>
-        <header className={styles.header}>
-          <p className={styles.kicker}>Base Mini App</p>
-          <h1>Wallet Wrapped</h1>
-          <p>
-            Paste any Base wallet and get an instant wrapped snapshot: activity pace, balance pulse, and share-ready
-            highlights.
-          </p>
-        </header>
+        <nav className={styles.topBar} aria-label="App navigation">
+          <div className={styles.brand}>
+            <span className={styles.brandMark}>B</span>
+            <span>Base Wallet</span>
+          </div>
 
-        <section className={styles.panel}>
-          <form onSubmit={handleSubmit} className={styles.form}>
-            <label htmlFor="walletAddress">Wallet address</label>
+          <button
+            type="button"
+            className={`${styles.themeToggle} ${theme === "light" ? styles.themeToggleLight : ""}`}
+            onClick={handleThemeToggle}
+            aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
+            title={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
+          >
+            <span className={styles.themeThumb} aria-hidden="true" />
+          </button>
+        </nav>
+
+        <section className={styles.hero}>
+          <h1>Base Wallet Wrapped</h1>
+          <p>Lookup any wallet. No sign-up needed.</p>
+
+          <form onSubmit={handleSubmit} className={styles.lookupForm}>
+            <label htmlFor="walletAddress" className={styles.srOnly}>
+              Wallet address
+            </label>
             <input
               id="walletAddress"
+              className={styles.addressInput}
               type="text"
               autoComplete="off"
               spellCheck={false}
-              placeholder="0x..."
+              placeholder="Enter wallet address (0x...)"
               value={addressInput}
               onChange={(event) => setAddressInput(event.target.value)}
             />
 
-            <div className={styles.actions}>
-              <button type="submit" className={styles.primaryButton} disabled={isLoading}>
-                {isLoading ? "Analyzing..." : "Analyze Wallet"}
-              </button>
-              <button
-                type="button"
-                className={styles.secondaryButton}
-                onClick={() => void handleUseConnectedWallet()}
-                disabled={isLoading}
-              >
-                Use Connected Wallet
-              </button>
-            </div>
+            <button type="submit" className={styles.lookupButton} disabled={isLoading}>
+              {isLoading ? "Loading..." : "Lookup"}
+            </button>
           </form>
 
-          <p className={styles.hint}>No backend, no signatures, no storage. Data is pulled directly from public Base explorer APIs.</p>
+          <button
+            type="button"
+            className={styles.walletButton}
+            onClick={() => void handleUseConnectedWallet()}
+            disabled={isLoading}
+          >
+            Use connected wallet
+          </button>
 
           {errorMessage ? <p className={styles.error}>{errorMessage}</p> : null}
         </section>
 
+        {isIdleState ? (
+          <section className={styles.previewArea} aria-label="Wallet preview">
+            <article className={styles.previewCard}>
+              <span>30d rhythm</span>
+              <strong>Active-day cadence and transaction pace</strong>
+            </article>
+            <article className={styles.previewCard}>
+              <span>Balance pulse</span>
+              <strong>Live ETH balance plus USD value snapshot</strong>
+            </article>
+            <article className={styles.previewCard}>
+              <span>Share card</span>
+              <strong>Copy or share a compact wallet recap instantly</strong>
+            </article>
+          </section>
+        ) : null}
+
         {isLoading ? (
           <section className={styles.loadingCard}>
-            <p>Crunching your onchain rhythm...</p>
+            <p>Fetching wallet analytics...</p>
           </section>
         ) : null}
 
         {snapshot ? (
-          <>
-            <section className={styles.heroCard}>
-              <div>
-                <p className={styles.badge}>{snapshot.badge.title}</p>
-                <h2>{snapshot.name ?? snapshot.shortAddress}</h2>
+          <section className={styles.snapshotSection}>
+            <div className={styles.sectionHeader}>
+              <h2>Wallet Snapshot</h2>
+              <div className={styles.chipRow}>
+                <span className={styles.chip}>30D</span>
+                <span className={styles.chip}>Lifetime</span>
+                <span className={styles.chipActive}>{snapshot.badge.title}</span>
+              </div>
+            </div>
+
+            <article className={styles.identityCard}>
+              <div className={styles.identityText}>
+                <h3>{snapshot.name ?? snapshot.shortAddress}</h3>
                 <p>{snapshot.badge.reason}</p>
-                <p className={styles.meta}>
-                  {snapshot.entityType} • {snapshot.address}
+                <p className={styles.identityMeta}>
+                  {snapshot.entityType} - {snapshot.address}
                 </p>
               </div>
-              <div className={styles.scoreCard}>
-                <span>30d consistency</span>
-                <strong>{Math.round((snapshot.activeDays / LOOKBACK_DAYS) * 100)}%</strong>
-                <small>{snapshot.activeDays} active days in the last 30</small>
-              </div>
-            </section>
 
-            <section className={styles.metricsGrid}>
+              <div className={styles.consistencyCard}>
+                <span>Consistency</span>
+                <strong>{Math.round((snapshot.activeDays / LOOKBACK_DAYS) * 100)}%</strong>
+                <small>{snapshot.activeDays}/30 active days</small>
+              </div>
+            </article>
+
+            <div className={styles.quickStats}>
+              <article className={styles.quickCard}>
+                <span>Incoming</span>
+                <strong>{formatCount(snapshot.inboundTxs30d)}</strong>
+              </article>
+
+              <article className={styles.quickCard}>
+                <span>Outgoing</span>
+                <strong>{formatCount(snapshot.outboundTxs30d)}</strong>
+              </article>
+
+              <article className={styles.quickCard}>
+                <span>Largest move</span>
+                <strong>{snapshot.largestTransferEth30d} ETH</strong>
+              </article>
+            </div>
+
+            <div className={styles.metricsGrid}>
               <article className={styles.metricCard}>
-                <p>Lifetime transactions</p>
-                <h3>{formatCount(snapshot.lifetimeTxs)}</h3>
+                <p>Lifetime tx</p>
+                <h3>{snapshot.lifetimeTxs}</h3>
               </article>
 
               <article className={styles.metricCard}>
-                <p>Transactions (30d)</p>
+                <p>30d tx</p>
                 <h3>{formatCount(snapshot.txsLast30Days)}</h3>
               </article>
 
               <article className={styles.metricCard}>
-                <p>Token transfers</p>
-                <h3>{formatCount(snapshot.tokenTransfers)}</h3>
+                <p>Token moves</p>
+                <h3>{snapshot.tokenTransfers}</h3>
               </article>
 
               <article className={styles.metricCard}>
-                <p>Wallet balance</p>
+                <p>Balance</p>
                 <h3>{snapshot.balanceEth} ETH</h3>
                 <small>{formatUsd(snapshot.balanceUsd)}</small>
               </article>
 
               <article className={styles.metricCard}>
-                <p>Lifetime gas units</p>
+                <p>Gas used</p>
                 <h3>{snapshot.gasUnits}</h3>
               </article>
 
               <article className={styles.metricCard}>
-                <p>Peak active hour</p>
+                <p>Peak hour</p>
                 <h3>{formatHourUtc(snapshot.mostActiveHourUtc)}</h3>
               </article>
-            </section>
+            </div>
 
-            <section className={styles.bottomGrid}>
+            <div className={styles.bottomGrid}>
               <article className={styles.detailCard}>
-                <h3>30-day activity split</h3>
+                <h3>30-day split</h3>
                 <ul>
                   <li>
                     <span>Outgoing tx</span>
@@ -490,9 +688,9 @@ export default function Home() {
               </article>
 
               <article className={styles.detailCard}>
-                <h3>Share your wrapped</h3>
+                <h3>Share card</h3>
                 <pre>{shareMessage}</pre>
-                <div className={styles.actions}>
+                <div className={styles.buttonRow}>
                   <button type="button" className={styles.primaryButton} onClick={() => void handleNativeShare()}>
                     Share
                   </button>
@@ -501,13 +699,9 @@ export default function Home() {
                   </button>
                 </div>
               </article>
-            </section>
-          </>
+            </div>
+          </section>
         ) : null}
-
-        <footer className={styles.footer}>
-          Built for Vercel Hobby: static-first UI with direct reads from Base public APIs.
-        </footer>
       </main>
     </div>
   );

@@ -1,4 +1,4 @@
-# Wallet Wrapped (Base Mini App)
+# Base Wallet Wrapped (Base Mini App)
 
 A no-backend Base mini app that turns any wallet into a shareable onchain recap.
 
