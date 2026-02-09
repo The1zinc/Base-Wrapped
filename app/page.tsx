@@ -534,7 +534,7 @@ export default function Home() {
 
         <section className={styles.hero}>
           <h1>Base Wallet Wrapped</h1>
-          <p>Lookup any wallet. No sign-up needed.</p>
+          <p>Paste a Base address to get a quick onchain snapshot.</p>
 
           <form onSubmit={handleSubmit} className={styles.lookupForm}>
             <label htmlFor="walletAddress" className={styles.srOnly}>
