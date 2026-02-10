@@ -48,6 +48,7 @@ export const metadata: Metadata = {
     images: [`${appUrl}/og-image.svg`],
   },
   other: {
+    "base:app_id": "698b67fde1a5644e788ace1a",
     "fc:miniapp": JSON.stringify(miniAppEmbed),
     "fc:frame": JSON.stringify(miniAppEmbed),
   },
