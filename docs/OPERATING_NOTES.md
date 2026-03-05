@@ -91,3 +91,9 @@ This document captures lightweight release and maintenance guidance for Base Wal
 - `30d tx` counts transactions inside the rolling 30-day window.
 - `Active days` counts unique UTC dates with observed activity.
 - `Largest move` tracks the biggest transfer in the same period.
+
+## Badge Threshold Review
+
+- Revisit badge breakpoints quarterly using recent usage patterns.
+- Favor small changes to reduce abrupt label swings.
+- Record threshold updates in release notes.
