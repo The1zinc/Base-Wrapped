@@ -175,3 +175,9 @@ This document captures lightweight release and maintenance guidance for Base Wal
 - Keep `noindex` enabled while testing and disable at launch time.
 - Share the production URL in Base App to trigger indexing.
 - Re-check manifest reachability if discovery is delayed.
+
+## Farcaster Payload Validation
+
+- Ensure account association fields are fully populated before deploy.
+- Reject releases that still include placeholder signature values.
+- Regenerate payloads when ownership or domain bindings change.
