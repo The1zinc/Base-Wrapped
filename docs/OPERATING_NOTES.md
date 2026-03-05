@@ -109,3 +109,9 @@ This document captures lightweight release and maintenance guidance for Base Wal
 - Target current Chrome, Safari, and Firefox versions.
 - Allow graceful fallback when native share is unavailable.
 - Avoid blocking releases on obsolete browser-only issues.
+
+## Analytics Verification
+
+- Check that post-deploy page activity is visible in analytics dashboards.
+- Correlate traffic changes with release timestamps before escalating.
+- Document expected delays for fresh telemetry pipelines.
