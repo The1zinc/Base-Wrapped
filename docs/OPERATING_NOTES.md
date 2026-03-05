@@ -127,3 +127,9 @@ This document captures lightweight release and maintenance guidance for Base Wal
 - Tab through all controls and ensure visible focus rings.
 - Verify form submit and share actions work without a mouse.
 - Confirm no keyboard traps appear in interactive regions.
+
+## Contrast Review Checklist
+
+- Validate hero text contrast after palette adjustments.
+- Check helper labels and metadata for readability.
+- Avoid low-opacity text against warm gradient backgrounds.
