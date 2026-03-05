@@ -163,3 +163,9 @@ This document captures lightweight release and maintenance guidance for Base Wal
 - Rotate public configuration values during low-traffic windows.
 - Validate updated variables in preview before production rollout.
 - Refresh runbook examples when defaults change.
+
+## Domain Cutover Checklist
+
+- Verify DNS and certificates before changing the canonical host.
+- Update `NEXT_PUBLIC_URL` and redeploy once the domain is live.
+- Confirm metadata and manifest links use the new host.
