@@ -115,3 +115,9 @@ This document captures lightweight release and maintenance guidance for Base Wal
 - Check that post-deploy page activity is visible in analytics dashboards.
 - Correlate traffic changes with release timestamps before escalating.
 - Document expected delays for fresh telemetry pipelines.
+
+## Speed Insights Sanity
+
+- Compare key vitals before and after UI-heavy updates.
+- Watch responsiveness on lower-end mobile devices.
+- Schedule optimization work when p95 metrics trend upward.
