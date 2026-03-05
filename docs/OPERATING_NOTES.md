@@ -79,3 +79,9 @@ This document captures lightweight release and maintenance guidance for Base Wal
 - Advise users to retry once when explorer requests time out.
 - Escalate after repeated failures across multiple addresses.
 - Keep support responses clear and action oriented.
+
+## Invalid Address Triage
+
+- Reject shortened values and non-hex prefixes.
+- Trim pasted text to remove accidental punctuation.
+- Use brief error copy that explains the expected format.
