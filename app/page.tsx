@@ -11,6 +11,7 @@ const REQUEST_TIMEOUT_MS = 15_000;
 const WEI_PER_ETH = BigInt("1000000000000000000");
 const ADDRESS_REGEX = /^0x[a-fA-F0-9]{40}$/;
 const THEME_STORAGE_KEY = "base-wallet-wrapped-theme-v2";
+const SHARE_COPY_RESET_MS = 2_200;
 const MAX_TRANSACTIONS_ANALYZED = 1_200;
 const APP_URL = resolveAppUrl(process.env.NEXT_PUBLIC_URL, {
   allowHttpLocalhost: process.env.NODE_ENV !== "production",
@@ -458,7 +459,7 @@ export default function Home() {
     try {
       await navigator.clipboard.writeText(shareMessage);
       setIsShareCopied(true);
-      window.setTimeout(() => setIsShareCopied(false), 2200);
+      window.setTimeout(() => setIsShareCopied(false), SHARE_COPY_RESET_MS);
     } catch {
       setErrorMessage("Could not copy to clipboard. Please copy manually from the share card.");
     }
