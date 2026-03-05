@@ -199,3 +199,9 @@ This document captures lightweight release and maintenance guidance for Base Wal
 - Validate explorer freshness before treating reports as app regressions.
 - Cross-check behavior on two known reference addresses.
 - Share expected indexing lag in support replies when relevant.
+
+## User Feedback Tagging
+
+- Tag reports by UX, data quality, performance, or reliability.
+- Group repeated requests before prioritization decisions.
+- Track which releases resolve high-frequency feedback clusters.
