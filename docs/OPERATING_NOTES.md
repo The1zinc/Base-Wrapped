@@ -133,3 +133,9 @@ This document captures lightweight release and maintenance guidance for Base Wal
 - Validate hero text contrast after palette adjustments.
 - Check helper labels and metadata for readability.
 - Avoid low-opacity text against warm gradient backgrounds.
+
+## Smoke Test Matrix
+
+- Test a fresh wallet, an active wallet, and a contract address.
+- Cover manual input, deep links, and connected wallet flows.
+- Record pass or fail results with release commit hash.
