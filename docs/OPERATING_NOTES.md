@@ -19,3 +19,9 @@ This document captures lightweight release and maintenance guidance for Base Wal
 - Ping Base Blockscout endpoints before release announcements.
 - Retry failed reads once before escalating incidents.
 - Log outage windows for support visibility.
+
+## Wallet Connect Sanity Test
+
+- Verify connect flow using an injected wallet provider.
+- Check cancel behavior and user-facing error copy.
+- Confirm manual address mode still works after failed connect attempts.
