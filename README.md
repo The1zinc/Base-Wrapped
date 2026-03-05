@@ -73,6 +73,13 @@ Open `http://localhost:3000`.
 
 Production note: do not ship with empty `accountAssociation.header`, `accountAssociation.payload`, or `accountAssociation.signature` fields in `public/.well-known/farcaster.json`.
 
+## Troubleshooting quick hits
+
+- **Address rejected:** make sure the value is a full `0x` address with 40 hex characters.
+- **Timeout while loading:** retry once; Blockscout latency can spike during chain traffic bursts.
+- **Wallet connect unavailable:** use manual paste mode when no injected wallet provider exists.
+- **Share dialog not opening:** some browsers block native share on desktop, so use copy fallback.
+
 ## Why this fits Vercel Hobby
 
 - No persistent backend services
