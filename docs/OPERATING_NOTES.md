@@ -55,3 +55,9 @@ This document captures lightweight release and maintenance guidance for Base Wal
 - Inspect deployed response headers for expected CSP values.
 - Watch console logs for blocked script or fetch requests.
 - Document each allowed origin with a short reason.
+
+## HSTS Rollout Caveats
+
+- Enable HSTS only after HTTPS behavior is stable.
+- Avoid strict transport on temporary preview domains.
+- Capture rollback considerations in release notes.
