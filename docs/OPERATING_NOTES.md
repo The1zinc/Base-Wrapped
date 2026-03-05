@@ -121,3 +121,9 @@ This document captures lightweight release and maintenance guidance for Base Wal
 - Compare key vitals before and after UI-heavy updates.
 - Watch responsiveness on lower-end mobile devices.
 - Schedule optimization work when p95 metrics trend upward.
+
+## Keyboard Accessibility Checks
+
+- Tab through all controls and ensure visible focus rings.
+- Verify form submit and share actions work without a mouse.
+- Confirm no keyboard traps appear in interactive regions.
