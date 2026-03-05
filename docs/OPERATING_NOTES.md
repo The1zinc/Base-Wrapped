@@ -205,3 +205,9 @@ This document captures lightweight release and maintenance guidance for Base Wal
 - Tag reports by UX, data quality, performance, or reliability.
 - Group repeated requests before prioritization decisions.
 - Track which releases resolve high-frequency feedback clusters.
+
+## Weekly Maintenance Cadence
+
+- Review open regressions and unresolved user reports each week.
+- Clean stale branches and unused previews on a fixed schedule.
+- Reserve time for docs updates to prevent process drift.
