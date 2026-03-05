@@ -372,18 +372,19 @@ export default function Home() {
     abortControllerRef.current = requestController;
 
     const normalizedAddress = rawAddress.trim();
+    const encodedAddress = encodeURIComponent(normalizedAddress);
     setIsLoading(true);
     setErrorMessage("");
     setIsShareCopied(false);
 
     try {
       const [summary, counters, transactions] = await Promise.all([
-        fetchJson<AddressSummaryResponse>(`${BLOCKSCOUT_API}/addresses/${normalizedAddress}`, requestController.signal),
+        fetchJson<AddressSummaryResponse>(`${BLOCKSCOUT_API}/addresses/${encodedAddress}`, requestController.signal),
         fetchJson<AddressCountersResponse>(
-          `${BLOCKSCOUT_API}/addresses/${normalizedAddress}/counters`,
+          `${BLOCKSCOUT_API}/addresses/${encodedAddress}/counters`,
           requestController.signal,
         ),
-        fetchJson<TransactionsResponse>(`${BLOCKSCOUT_API}/addresses/${normalizedAddress}/transactions`, requestController.signal),
+        fetchJson<TransactionsResponse>(`${BLOCKSCOUT_API}/addresses/${encodedAddress}/transactions`, requestController.signal),
       ]);
 
       if (requestId !== requestIdRef.current) {
