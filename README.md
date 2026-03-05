@@ -56,6 +56,8 @@ Open `http://localhost:3000`.
 5. Redeploy.
 6. Share your app URL once in Base App to trigger indexing.
 
+Production note: do not ship with empty `accountAssociation.header`, `accountAssociation.payload`, or `accountAssociation.signature` fields in `public/.well-known/farcaster.json`.
+
 ## Why this fits Vercel Hobby
 
 - No persistent backend services

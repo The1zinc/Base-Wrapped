@@ -2,6 +2,7 @@
 
 import { sdk } from "@farcaster/miniapp-sdk";
 import { FormEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { resolveAppUrl } from "@/lib/app-url";
 import styles from "./page.module.css";
 
 const BLOCKSCOUT_API = "https://base.blockscout.com/api/v2";
@@ -10,6 +11,10 @@ const REQUEST_TIMEOUT_MS = 15_000;
 const WEI_PER_ETH = BigInt("1000000000000000000");
 const ADDRESS_REGEX = /^0x[a-fA-F0-9]{40}$/;
 const THEME_STORAGE_KEY = "base-wallet-wrapped-theme-v2";
+const MAX_TRANSACTIONS_ANALYZED = 1_200;
+const APP_URL = resolveAppUrl(process.env.NEXT_PUBLIC_URL, {
+  allowHttpLocalhost: process.env.NODE_ENV !== "production",
+});
 
 type AddressSummaryResponse = {
   coin_balance: string;
@@ -384,7 +389,13 @@ export default function Home() {
         return;
       }
 
-      setSnapshot(buildSnapshot(normalizedAddress, summary, counters, transactions.items));
+      const transactionItems: TransactionItem[] = Array.isArray(transactions.items) ? transactions.items : [];
+      const boundedTransactions =
+        transactionItems.length > MAX_TRANSACTIONS_ANALYZED
+          ? transactionItems.slice(0, MAX_TRANSACTIONS_ANALYZED)
+          : transactionItems;
+
+      setSnapshot(buildSnapshot(normalizedAddress, summary, counters, boundedTransactions));
     } catch (error) {
       if (requestId !== requestIdRef.current || error instanceof RequestAbortedError) {
         return;
@@ -462,7 +473,7 @@ export default function Home() {
       try {
         await navigator.share({
           text: shareMessage,
-          url: process.env.NEXT_PUBLIC_URL,
+          url: APP_URL,
         });
         return;
       } catch {

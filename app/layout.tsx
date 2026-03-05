@@ -2,6 +2,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Mono, Space_Grotesk } from "next/font/google";
+import { resolveAppUrl } from "@/lib/app-url";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -15,13 +16,9 @@ const ibmPlexMono = IBM_Plex_Mono({
   subsets: ["latin"],
 });
 
-function getAppUrl(): string {
-  const rawUrl = (process.env.NEXT_PUBLIC_URL ?? "https://wallet-wrapped-mini.vercel.app").trim();
-  const withProtocol = rawUrl.startsWith("http://") || rawUrl.startsWith("https://") ? rawUrl : `https://${rawUrl}`;
-  return withProtocol.replace(/\/$/, "");
-}
-
-const appUrl = getAppUrl();
+const appUrl = resolveAppUrl(process.env.NEXT_PUBLIC_URL, {
+  allowHttpLocalhost: process.env.NODE_ENV !== "production",
+});
 
 const miniAppEmbed = {
   version: "next",
