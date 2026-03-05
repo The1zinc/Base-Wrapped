@@ -67,3 +67,9 @@ This document captures lightweight release and maintenance guidance for Base Wal
 - Update setup steps whenever deployment prerequisites change.
 - Refresh command examples when scripts are adjusted.
 - Treat outdated setup docs as release blockers.
+
+## Incident Severity Ladder
+
+- Sev 1 means wallet lookup is broadly unavailable.
+- Sev 2 means degraded behavior with workable fallback paths.
+- Sev 3 means cosmetic or low-impact presentation defects.
