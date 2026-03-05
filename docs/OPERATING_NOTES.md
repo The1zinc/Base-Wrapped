@@ -25,3 +25,9 @@ This document captures lightweight release and maintenance guidance for Base Wal
 - Verify connect flow using an injected wallet provider.
 - Check cancel behavior and user-facing error copy.
 - Confirm manual address mode still works after failed connect attempts.
+
+## Deep-Link Address Validation
+
+- Treat query input as untrusted and normalize before use.
+- Auto-load only strict `0x` plus 40-hex addresses.
+- Keep invalid links non-fatal so manual input remains available.
