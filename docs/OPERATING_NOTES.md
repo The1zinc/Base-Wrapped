@@ -145,3 +145,9 @@ This document captures lightweight release and maintenance guidance for Base Wal
 - Capture issue title, discovery date, and reproducible steps.
 - Link the fixing commit once a patch is merged.
 - Close entries only after production verification.
+
+## Release Note Template
+
+- Headline should explain user-facing impact in one sentence.
+- Include a short risk label with justification.
+- List completed checks such as lint, build, and smoke tests.
