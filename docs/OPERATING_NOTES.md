@@ -157,3 +157,9 @@ This document captures lightweight release and maintenance guidance for Base Wal
 - Keep the previous stable deployment easy to re-promote.
 - Communicate rollback scope and current status quickly.
 - Capture root cause notes for follow-up hardening work.
+
+## Environment Variable Rotation
+
+- Rotate public configuration values during low-traffic windows.
+- Validate updated variables in preview before production rollout.
+- Refresh runbook examples when defaults change.
