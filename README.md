@@ -94,6 +94,16 @@ Production note: do not ship with empty `accountAssociation.header`, `accountAss
 3. Test both share paths: native share (if supported) and clipboard fallback.
 4. Open `/.well-known/farcaster.json` and validate the deployed host values.
 
+## Support FAQ
+
+### Why does the wrapped only cover 30 days?
+
+The experience is tuned for a fast snapshot, so it prioritizes recent behavior over full history analytics.
+
+### Does this app move funds or request wallet signatures?
+
+No. It only reads public chain data and optionally asks wallet providers for the connected address.
+
 ## Useful commands
 
 ```bash
