@@ -56,6 +56,12 @@ Open `http://localhost:3000`.
 
 4. Deploy.
 
+## Environment variable reference
+
+| Variable | Required | Example | Notes |
+| --- | --- | --- | --- |
+| `NEXT_PUBLIC_URL` | Yes | `https://wallet-wrapped-mini.vercel.app` | Used for metadata, share links, and Farcaster embed URLs. |
+
 ## Base mini app setup checklist
 
 1. Update `public/.well-known/farcaster.json` URLs from the placeholder domain to your real domain.
