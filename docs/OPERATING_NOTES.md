@@ -49,3 +49,9 @@ This document captures lightweight release and maintenance guidance for Base Wal
 - Confirm top and bottom safe-area padding on modern devices.
 - Verify action buttons remain reachable near gesture bars.
 - Check long wallet addresses do not break card layout.
+
+## CSP Rollout Verification
+
+- Inspect deployed response headers for expected CSP values.
+- Watch console logs for blocked script or fetch requests.
+- Document each allowed origin with a short reason.
