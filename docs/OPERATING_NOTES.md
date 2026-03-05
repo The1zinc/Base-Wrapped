@@ -103,3 +103,9 @@ This document captures lightweight release and maintenance guidance for Base Wal
 - Bound large payloads to avoid heavy client memory spikes.
 - Keep the cap high enough to preserve representative recent behavior.
 - Re-evaluate cap values when API response sizes change.
+
+## Browser Support Baseline
+
+- Target current Chrome, Safari, and Firefox versions.
+- Allow graceful fallback when native share is unavailable.
+- Avoid blocking releases on obsolete browser-only issues.
