@@ -85,3 +85,9 @@ This document captures lightweight release and maintenance guidance for Base Wal
 - Reject shortened values and non-hex prefixes.
 - Trim pasted text to remove accidental punctuation.
 - Use brief error copy that explains the expected format.
+
+## Snapshot Metric Definitions
+
+- `30d tx` counts transactions inside the rolling 30-day window.
+- `Active days` counts unique UTC dates with observed activity.
+- `Largest move` tracks the biggest transfer in the same period.
