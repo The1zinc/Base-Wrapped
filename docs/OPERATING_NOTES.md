@@ -31,3 +31,9 @@ This document captures lightweight release and maintenance guidance for Base Wal
 - Treat query input as untrusted and normalize before use.
 - Auto-load only strict `0x` plus 40-hex addresses.
 - Keep invalid links non-fatal so manual input remains available.
+
+## Share Message QA
+
+- Ensure the share card includes badge and 30-day activity stats.
+- Test native share and clipboard fallback paths.
+- Keep share text short enough for social preview readability.
