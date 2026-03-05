@@ -97,3 +97,9 @@ This document captures lightweight release and maintenance guidance for Base Wal
 - Revisit badge breakpoints quarterly using recent usage patterns.
 - Favor small changes to reduce abrupt label swings.
 - Record threshold updates in release notes.
+
+## Transaction Cap Rationale
+
+- Bound large payloads to avoid heavy client memory spikes.
+- Keep the cap high enough to preserve representative recent behavior.
+- Re-evaluate cap values when API response sizes change.
