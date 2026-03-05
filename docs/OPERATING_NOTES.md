@@ -229,3 +229,9 @@ This document captures lightweight release and maintenance guidance for Base Wal
 - Confirm analytics and vitals streams after config changes.
 - Watch for sudden spikes in user-facing error states.
 - Escalate silent failure patterns even when crash rates are low.
+
+## Incident Timeline Format
+
+- Capture detection, mitigation, and resolution timestamps.
+- Keep timeline notes factual during active incidents.
+- Publish a short retrospective after incident closure.
