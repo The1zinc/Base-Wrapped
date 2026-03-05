@@ -139,3 +139,9 @@ This document captures lightweight release and maintenance guidance for Base Wal
 - Test a fresh wallet, an active wallet, and a contract address.
 - Cover manual input, deep links, and connected wallet flows.
 - Record pass or fail results with release commit hash.
+
+## Regression Log Template
+
+- Capture issue title, discovery date, and reproducible steps.
+- Link the fixing commit once a patch is merged.
+- Close entries only after production verification.
