@@ -61,3 +61,9 @@ This document captures lightweight release and maintenance guidance for Base Wal
 - Enable HSTS only after HTTPS behavior is stable.
 - Avoid strict transport on temporary preview domains.
 - Capture rollback considerations in release notes.
+
+## README Ownership
+
+- Update setup steps whenever deployment prerequisites change.
+- Refresh command examples when scripts are adjusted.
+- Treat outdated setup docs as release blockers.
