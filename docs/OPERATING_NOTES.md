@@ -13,3 +13,9 @@ This document captures lightweight release and maintenance guidance for Base Wal
 - Run `npm run lint` and `npm run build` before release merges.
 - Confirm `NEXT_PUBLIC_URL` matches the target deployment host.
 - Check that no debug copy or placeholder text remains.
+
+## Explorer API Availability
+
+- Ping Base Blockscout endpoints before release announcements.
+- Retry failed reads once before escalating incidents.
+- Log outage windows for support visibility.
