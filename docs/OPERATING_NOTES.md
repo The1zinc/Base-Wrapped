@@ -73,3 +73,9 @@ This document captures lightweight release and maintenance guidance for Base Wal
 - Sev 1 means wallet lookup is broadly unavailable.
 - Sev 2 means degraded behavior with workable fallback paths.
 - Sev 3 means cosmetic or low-impact presentation defects.
+
+## Timeout Retry Guidance
+
+- Advise users to retry once when explorer requests time out.
+- Escalate after repeated failures across multiple addresses.
+- Keep support responses clear and action oriented.
