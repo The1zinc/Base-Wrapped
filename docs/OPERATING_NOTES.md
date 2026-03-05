@@ -169,3 +169,9 @@ This document captures lightweight release and maintenance guidance for Base Wal
 - Verify DNS and certificates before changing the canonical host.
 - Update `NEXT_PUBLIC_URL` and redeploy once the domain is live.
 - Confirm metadata and manifest links use the new host.
+
+## Base App Indexing Reminders
+
+- Keep `noindex` enabled while testing and disable at launch time.
+- Share the production URL in Base App to trigger indexing.
+- Re-check manifest reachability if discovery is delayed.
