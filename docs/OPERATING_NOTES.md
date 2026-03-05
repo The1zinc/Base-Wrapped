@@ -193,3 +193,9 @@ This document captures lightweight release and maintenance guidance for Base Wal
 - Track lookup latency for high-activity wallet addresses.
 - Separate timeout trends from hard API failures in reports.
 - Schedule optimization work when p95 latency rises repeatedly.
+
+## Stale Data Triage
+
+- Validate explorer freshness before treating reports as app regressions.
+- Cross-check behavior on two known reference addresses.
+- Share expected indexing lag in support replies when relevant.
