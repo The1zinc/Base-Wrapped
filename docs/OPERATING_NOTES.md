@@ -217,3 +217,9 @@ This document captures lightweight release and maintenance guidance for Base Wal
 - Run full lint and build checks from a clean install baseline.
 - Re-test critical flows on both light and dark themes.
 - Capture findings and follow-up actions in release planning.
+
+## Dependency Update Policy
+
+- Prefer patch and minor upgrades in regular maintenance batches.
+- Run smoke tests after framework and SDK dependency updates.
+- Document upgrade impacts that affect user experience.
