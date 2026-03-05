@@ -87,6 +87,13 @@ Production note: do not ship with empty `accountAssociation.header`, `accountAss
 - No scheduled jobs
 - Mostly static UI + direct read calls to public APIs
 
+## Post-deploy verification checklist
+
+1. Confirm app loads with no console errors on both mobile and desktop widths.
+2. Run one wallet lookup and verify all key metrics render.
+3. Test both share paths: native share (if supported) and clipboard fallback.
+4. Open `/.well-known/farcaster.json` and validate the deployed host values.
+
 ## Useful commands
 
 ```bash
