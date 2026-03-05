@@ -235,3 +235,9 @@ This document captures lightweight release and maintenance guidance for Base Wal
 - Capture detection, mitigation, and resolution timestamps.
 - Keep timeline notes factual during active incidents.
 - Publish a short retrospective after incident closure.
+
+## Maintainer Handoff Checklist
+
+- List open risks, pending fixes, and planned release steps.
+- Share current deployment status and verification outcomes.
+- Link core setup docs and operational references for continuity.
