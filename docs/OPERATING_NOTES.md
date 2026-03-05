@@ -211,3 +211,9 @@ This document captures lightweight release and maintenance guidance for Base Wal
 - Review open regressions and unresolved user reports each week.
 - Clean stale branches and unused previews on a fixed schedule.
 - Reserve time for docs updates to prevent process drift.
+
+## Monthly Quality Audit
+
+- Run full lint and build checks from a clean install baseline.
+- Re-test critical flows on both light and dark themes.
+- Capture findings and follow-up actions in release planning.
