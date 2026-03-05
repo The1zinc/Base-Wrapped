@@ -43,3 +43,9 @@ This document captures lightweight release and maintenance guidance for Base Wal
 - Toggle theme, reload, and verify the saved mode is restored.
 - Validate behavior when local storage is blocked.
 - Check contrast quality in both theme variants.
+
+## Mobile Safe-Area Review
+
+- Confirm top and bottom safe-area padding on modern devices.
+- Verify action buttons remain reachable near gesture bars.
+- Check long wallet addresses do not break card layout.
