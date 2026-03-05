@@ -656,11 +656,11 @@
 
 @media (max-width: 720px) {
   .main {
-    gap: 12px;
+    gap: 14px;
   }
 
   .topBar {
-    gap: 6px;
+    gap: 8px;
     padding: 7px;
   }
 
@@ -692,7 +692,7 @@
   }
 
   .hero {
-    padding: 18px 12px 12px;
+    padding: 20px 12px 14px;
   }
 
   .lookupForm,
