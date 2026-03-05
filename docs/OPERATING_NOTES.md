@@ -37,3 +37,9 @@ This document captures lightweight release and maintenance guidance for Base Wal
 - Ensure the share card includes badge and 30-day activity stats.
 - Test native share and clipboard fallback paths.
 - Keep share text short enough for social preview readability.
+
+## Theme Persistence Validation
+
+- Toggle theme, reload, and verify the saved mode is restored.
+- Validate behavior when local storage is blocked.
+- Check contrast quality in both theme variants.
