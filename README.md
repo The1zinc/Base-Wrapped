@@ -2,6 +2,15 @@
 
 A no-backend Base mini app that turns any wallet into a shareable onchain recap.
 
+## Quick navigation
+
+- [What this app does](#what-this-app-does)
+- [Tech stack](#tech-stack)
+- [Local development](#local-development)
+- [Deploy on Vercel](#deploy-on-vercel-hobby-friendly)
+- [Base mini app setup checklist](#base-mini-app-setup-checklist)
+- [Useful commands](#useful-commands)
+
 ## What this app does
 
 - Reads public wallet data from Base Blockscout API (no API key required)
