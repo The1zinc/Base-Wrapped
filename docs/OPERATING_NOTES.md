@@ -151,3 +151,9 @@ This document captures lightweight release and maintenance guidance for Base Wal
 - Headline should explain user-facing impact in one sentence.
 - Include a short risk label with justification.
 - List completed checks such as lint, build, and smoke tests.
+
+## Rollback Playbook
+
+- Keep the previous stable deployment easy to re-promote.
+- Communicate rollback scope and current status quickly.
+- Capture root cause notes for follow-up hardening work.
