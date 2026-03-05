@@ -223,3 +223,9 @@ This document captures lightweight release and maintenance guidance for Base Wal
 - Prefer patch and minor upgrades in regular maintenance batches.
 - Run smoke tests after framework and SDK dependency updates.
 - Document upgrade impacts that affect user experience.
+
+## Observability Review Checklist
+
+- Confirm analytics and vitals streams after config changes.
+- Watch for sudden spikes in user-facing error states.
+- Escalate silent failure patterns even when crash rates are low.
