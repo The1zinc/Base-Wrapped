@@ -517,7 +517,8 @@ export default function Home() {
     const initialTheme: ThemeMode = storedTheme === "dark" || storedTheme === "light" ? storedTheme : "dark";
     applyTheme(initialTheme);
 
-    const addressFromQuery = new URLSearchParams(window.location.search).get("address");
+    const addressFromQueryRaw = new URLSearchParams(window.location.search).get("address");
+    const addressFromQuery = addressFromQueryRaw?.trim() ?? "";
     if (addressFromQuery && isAddress(addressFromQuery)) {
       setAddressInput(addressFromQuery);
       void loadSnapshot(addressFromQuery);
