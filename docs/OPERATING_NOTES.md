@@ -181,3 +181,9 @@ This document captures lightweight release and maintenance guidance for Base Wal
 - Ensure account association fields are fully populated before deploy.
 - Reject releases that still include placeholder signature values.
 - Regenerate payloads when ownership or domain bindings change.
+
+## Security Header Exceptions
+
+- Treat policy relaxations as temporary and review monthly.
+- Record a short reason for each newly allowed external origin.
+- Remove stale exceptions after dependency cleanup work.
