@@ -1,6 +1,6 @@
 # Analytics Health Checks
 
-e['s']
+Use this observability guide when validating Analytics Health Checks and deciding which signals need follow-up.
 
 ## Checks
 
