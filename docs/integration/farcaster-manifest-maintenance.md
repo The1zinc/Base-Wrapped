@@ -1,6 +1,6 @@
 # Farcaster Manifest Maintenance
 
-e['s']
+Use this integration note to keep Farcaster Manifest Maintenance aligned with external services and deployment settings.
 
 ## Tasks
 
