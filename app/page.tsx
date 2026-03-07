@@ -357,6 +357,10 @@ export default function Home() {
     return createShareMessage(snapshot);
   }, [snapshot]);
 
+  useEffect(() => {
+    setIsShareCopied(false);
+  }, [shareMessage]);
+
   const applyTheme = useCallback((nextTheme: ThemeMode): void => {
     setTheme(nextTheme);
     document.documentElement.dataset.theme = nextTheme;
