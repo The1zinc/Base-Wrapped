@@ -1,6 +1,6 @@
 # Security Headers Audit
 
-e['s']
+Use this security guide for Security Headers Audit whenever policy decisions or hardening steps need documentation.
 
 ## Items
 
