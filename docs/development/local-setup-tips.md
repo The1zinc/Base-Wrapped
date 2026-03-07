@@ -1,6 +1,6 @@
 # Local Setup Tips
 
-e['s']
+Use this development note as the source of truth for Local Setup Tips during implementation and review.
 
 ## Tips
 
