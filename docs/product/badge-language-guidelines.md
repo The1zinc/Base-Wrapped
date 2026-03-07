@@ -1,6 +1,6 @@
 # Badge Language Guidelines
 
-e['s']
+Use this product guide to keep Badge Language Guidelines decisions clear across UX, content, and prioritization reviews.
 
 ## Guidelines
 
