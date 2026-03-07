@@ -1,6 +1,6 @@
 # Maintenance Window Template
 
-e['s']
+Use this operations reference for Maintenance Window Template when coordinating maintenance windows and incident handling.
 
 ## Template
 
