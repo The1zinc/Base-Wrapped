@@ -1,6 +1,6 @@
 # Secure Config Guidelines
 
-e['s']
+Use this security guide for Secure Config Guidelines whenever policy decisions or hardening steps need documentation.
 
 ## Guidelines
 
