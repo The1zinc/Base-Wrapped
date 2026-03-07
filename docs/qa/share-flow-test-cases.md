@@ -1,6 +1,6 @@
 # Share Flow Test Cases
 
-e['s']
+Use this QA checklist as the baseline for Share Flow Test Cases so manual coverage stays consistent between releases.
 
 ## Behavior
 
