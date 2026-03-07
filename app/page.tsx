@@ -559,6 +559,7 @@ export default function Home() {
               className={styles.addressInput}
               type="text"
               autoComplete="off"
+              maxLength={42}
               spellCheck={false}
               placeholder="Enter wallet address (0x...)"
               value={addressInput}
