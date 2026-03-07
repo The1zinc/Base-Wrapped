@@ -1,6 +1,6 @@
 # Mobile Layout Test Cases
 
-e['s']
+Use this QA checklist as the baseline for Mobile Layout Test Cases so manual coverage stays consistent between releases.
 
 ## Checks
 
