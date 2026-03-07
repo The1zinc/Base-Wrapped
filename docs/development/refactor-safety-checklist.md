@@ -1,6 +1,6 @@
 # Refactor Safety Checklist
 
-e['s']
+Use this development note as the source of truth for Refactor Safety Checklist during implementation and review.
 
 ## Checks
 
