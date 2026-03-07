@@ -1,6 +1,6 @@
 # Blockscout Integration Notes
 
-e['s']
+Use this integration note to keep Blockscout Integration Notes aligned with external services and deployment settings.
 
 ## Notes
 
