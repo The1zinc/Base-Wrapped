@@ -1,6 +1,6 @@
 # TypeScript Guardrails
 
-e['s']
+Use this development note as the source of truth for TypeScript Guardrails during implementation and review.
 
 ## Guardrails
 
