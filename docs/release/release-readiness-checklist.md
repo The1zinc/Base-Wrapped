@@ -1,6 +1,6 @@
 # Release Readiness Checklist
 
-e['s']
+Use this release note for Release Readiness Checklist to keep rollout choices explicit, reversible, and easy to communicate.
 
 ## Checklist
 
