@@ -106,6 +106,10 @@ function toSafeNonNegativeNumber(value: bigint): number {
 }
 
 function formatUsd(value: number): string {
+  if (!Number.isFinite(value)) {
+    return "$0.00";
+  }
+
   return new Intl.NumberFormat("en-US", {
     currency: "USD",
     maximumFractionDigits: 2,
