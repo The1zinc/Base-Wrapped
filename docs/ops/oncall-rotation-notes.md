@@ -1,6 +1,6 @@
 # On Call Rotation Notes
 
-e['s']
+Use this operations reference for On Call Rotation Notes when coordinating maintenance windows and incident handling.
 
 ## Notes
 
