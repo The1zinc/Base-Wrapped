@@ -1,6 +1,6 @@
 # User Report Intake Template
 
-e['s']
+Use this support reference for User Report Intake Template to keep user-facing responses clear and actionable.
 
 ## Fields
 
