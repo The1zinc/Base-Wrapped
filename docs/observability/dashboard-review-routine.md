@@ -1,6 +1,6 @@
 # Dashboard Review Routine
 
-e['s']
+Use this observability guide when validating Dashboard Review Routine and deciding which signals need follow-up.
 
 ## Routine
 
