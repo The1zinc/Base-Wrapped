@@ -1,6 +1,6 @@
 # Theme Regression Cases
 
-e['s']
+Use this QA checklist as the baseline for Theme Regression Cases so manual coverage stays consistent between releases.
 
 ## Items
 
