@@ -203,6 +203,17 @@
     color 140ms ease;
 }
 
+.themeToggle:focus-visible,
+.lookupButton:focus-visible,
+.walletButton:focus-visible,
+.primaryButton:focus-visible,
+.secondaryButton:focus-visible,
+.addressInput:focus-visible {
+  border-color: var(--chip-active-text);
+  box-shadow: 0 0 0 3px rgba(255, 184, 120, 0.28);
+  outline: none;
+}
+
 .lookupButton {
   background: rgba(255, 245, 232, 0.97);
   color: #8b3f17;
