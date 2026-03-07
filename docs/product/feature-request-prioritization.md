@@ -1,6 +1,6 @@
 # Feature Request Prioritization
 
-e['s']
+Use this product guide to keep Feature Request Prioritization decisions clear across UX, content, and prioritization reviews.
 
 ## Scoring
 
