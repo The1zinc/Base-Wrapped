@@ -1,6 +1,6 @@
 # Public Data Boundaries
 
-e['s']
+Use this security guide for Public Data Boundaries whenever policy decisions or hardening steps need documentation.
 
 ## Scope
 
