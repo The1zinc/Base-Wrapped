@@ -194,6 +194,7 @@ function createShareMessage(snapshot: WrappedSnapshot): string {
     `Lifetime tx: ${snapshot.lifetimeTxs}`,
     `Last 30d tx: ${formatCount(snapshot.txsLast30Days)}`,
     `Active days: ${snapshot.activeDays}/30`,
+    `Peak hour: ${formatHourUtc(snapshot.mostActiveHourUtc)}`,
     `Balance: ${snapshot.balanceEth} ETH`,
   ].join("\n");
 }
