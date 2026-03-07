@@ -1,6 +1,6 @@
 # Changelog Template
 
-e['s']
+Use this release note for Changelog Template to keep rollout choices explicit, reversible, and easy to communicate.
 
 ## Fields
 
