@@ -1,6 +1,6 @@
 # Performance Budget Notes
 
-e['s']
+Use this observability guide when validating Performance Budget Notes and deciding which signals need follow-up.
 
 ## Targets
 
