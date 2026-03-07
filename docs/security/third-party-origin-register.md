@@ -1,6 +1,6 @@
 # Third Party Origin Register
 
-e['s']
+Use this security guide for Third Party Origin Register whenever policy decisions or hardening steps need documentation.
 
 ## Origins
 
