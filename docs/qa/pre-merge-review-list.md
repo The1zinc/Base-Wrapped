@@ -1,6 +1,6 @@
 # Pre Merge Review List
 
-e['s']
+Use this QA checklist as the baseline for Pre Merge Review List so manual coverage stays consistent between releases.
 
 ## Focus
 
