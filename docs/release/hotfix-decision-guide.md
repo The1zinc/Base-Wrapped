@@ -1,6 +1,6 @@
 # Hotfix Decision Guide
 
-e['s']
+Use this release note for Hotfix Decision Guide to keep rollout choices explicit, reversible, and easy to communicate.
 
 ## Criteria
 
