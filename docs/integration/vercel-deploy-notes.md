@@ -1,6 +1,6 @@
 # Vercel Deployment Notes
 
-e['s']
+Use this integration note to keep Vercel Deployment Notes aligned with external services and deployment settings.
 
 ## Notes
 
