@@ -1,6 +1,6 @@
 # UX Copy Principles
 
-e['s']
+Use this product guide to keep UX Copy Principles decisions clear across UX, content, and prioritization reviews.
 
 ## Principles
 
