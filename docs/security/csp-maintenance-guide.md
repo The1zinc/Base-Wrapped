@@ -1,6 +1,6 @@
 # CSP Maintenance Guide
 
-e['s']
+Use this security guide for CSP Maintenance Guide whenever policy decisions or hardening steps need documentation.
 
 ## Hygiene
 
