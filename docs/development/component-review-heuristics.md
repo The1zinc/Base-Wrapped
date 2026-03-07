@@ -1,6 +1,6 @@
 # Component Review Heuristics
 
-e['s']
+Use this development note as the source of truth for Component Review Heuristics during implementation and review.
 
 ## Heuristics
 
