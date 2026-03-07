@@ -1,6 +1,6 @@
 # Canary Rollout Plan
 
-e['s']
+Use this release note for Canary Rollout Plan to keep rollout choices explicit, reversible, and easy to communicate.
 
 ## Steps
 
