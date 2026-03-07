@@ -1,6 +1,6 @@
 # Reliability SLO Draft
 
-e['s']
+Use this observability guide when validating Reliability SLO Draft and deciding which signals need follow-up.
 
 ## Draft
 
