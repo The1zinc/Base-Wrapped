@@ -1,6 +1,6 @@
 # Wallet Connect FAQ
 
-e['s']
+Use this support reference for Wallet Connect FAQ to keep user-facing responses clear and actionable.
 
 ## FAQ
 
