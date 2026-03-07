@@ -1,6 +1,6 @@
 # Manual Smoke Suite
 
-e['s']
+Use this QA checklist as the baseline for Manual Smoke Suite so manual coverage stays consistent between releases.
 
 ## Checks
 
