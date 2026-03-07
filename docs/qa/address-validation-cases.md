@@ -1,6 +1,6 @@
 # Address Validation Cases
 
-e['s']
+Use this QA checklist as the baseline for Address Validation Cases so manual coverage stays consistent between releases.
 
 ## Cases
 
