@@ -1,6 +1,6 @@
 # Pull Request Quality Gate
 
-e['s']
+Use this development note as the source of truth for Pull Request Quality Gate during implementation and review.
 
 ## Gate
 
