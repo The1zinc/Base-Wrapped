@@ -1,6 +1,6 @@
 # Error State Tracking Plan
 
-e['s']
+Use this observability guide when validating Error State Tracking Plan and deciding which signals need follow-up.
 
 ## Focus
 
