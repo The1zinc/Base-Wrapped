@@ -1,6 +1,6 @@
 # Postmortem Outline
 
-e['s']
+Use this operations reference for Postmortem Outline when coordinating maintenance windows and incident handling.
 
 ## Outline
 
